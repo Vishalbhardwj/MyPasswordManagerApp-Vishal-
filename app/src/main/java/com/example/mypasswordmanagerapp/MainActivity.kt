@@ -42,6 +42,7 @@ import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.BottomSheetScaffoldState
 //import androidx.compose.material.*
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -52,6 +53,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -127,10 +129,7 @@ fun MainScreen(viewModel: PasswordViewModel) {
                     .size(60.dp)
 
             ) {
-//                Icon(
-//                    painter = painterResource(id = R.drawable.plusfloatingbutton),
-//                    contentDescription = "Add Password"
-//                )
+//
             }
         },
         floatingActionButtonPosition = FabPosition.End
@@ -315,7 +314,10 @@ fun AddPasswordScreen(viewModel: PasswordViewModel, function: () -> Unit) {
                 onClick = {
                     viewModel.addPassword(accountType, usernameEmail, password)
 //                onDismiss()
-                },
+                },colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Black,
+                    contentColor = Color.White
+                ),
                 modifier = Modifier
                     .padding(top = 16.dp)
 //                    .align(Alignment.End)
@@ -364,6 +366,10 @@ fun EditPasswordScreen(viewModel: PasswordViewModel, password: PasswordEntity, o
                     viewModel.updatePassword(password.copy(accountType = accountType, usernameEmail = usernameEmail, password = passwordValue))
                     onDismiss()
                 },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Black,
+                    contentColor = Color.White
+                ),
                 modifier = Modifier
                     .weight(1f)
                     .padding(end = 8.dp)
@@ -375,7 +381,10 @@ fun EditPasswordScreen(viewModel: PasswordViewModel, password: PasswordEntity, o
                     viewModel.deletePassword(password)
                     onDismiss()
                 },
-//                colors = buttonColors(backgroundColor = MaterialTheme.colors.error),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Red,
+                    contentColor = Color.White
+                ),
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 8.dp)

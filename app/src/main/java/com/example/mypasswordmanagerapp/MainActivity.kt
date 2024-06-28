@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,56 +21,43 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.mypasswordmanagerapp.ui.theme.MyPasswordManagerAppTheme
 
 
+
 class MainActivity : FragmentActivity() {
+    private lateinit var navController:NavHostController
+    private val biometricAuthenticator: BiometricAuthenticator by lazy {
+        BiometricAuthenticator(this)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val biometricAuthenticator = BiometricAuthenticator(this)
+//        val biometricAuthenticator = BiometricAuthenticator(this)
 
         setContent {
+
+             navController = rememberNavController()
+
             MyPasswordManagerAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    val activity = LocalContext.current as FragmentActivity
-                    var message by remember {
-                        mutableStateOf("")
+                navController = rememberNavController()
+                NavHost(navController = navController, startDestination = Routes.SignUpFingerPrint, builder = {
+                    composable(Routes.SignUpFingerPrint){
+                        SignUpFingerPrint(navController = navController, biometricAuthenticator = biometricAuthenticator)
                     }
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        TextButton(
-                            onClick = {
-                                biometricAuthenticator.promptBiometricAuth(
-                                    title = "Login",
-                                    subTitle = "Use your fingerprint",
-                                    negativeButtonText = "Cancel",
-                                    fragmentActivity = activity,
-                                    onSuccess = {
-                                        message = "Success"
-                                    },
-                                    onError = { _, errorString ->
-                                        message = errorString.toString()
-                                    },
-                                    onFailed = {
-                                        message = "Verification error"
-                                    }
-                                )
-                            }) {
-                            Text(text = "Sign in with fingerprint")
-                        }
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Text(text = message)
+                    composable(Routes.HomeScreen){
+                        HomeScreen(navController = navController)
                     }
-                }
+                })
+
             }
         }
     }
+
+
 }

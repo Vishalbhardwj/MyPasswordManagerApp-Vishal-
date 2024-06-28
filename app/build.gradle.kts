@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+
+    id("kotlin-kapt")
 }
 
 android {
@@ -59,6 +61,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.material3.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -69,4 +72,19 @@ dependencies {
     implementation("androidx.biometric:biometric:1.2.0-alpha05")
     val nav_version = "2.7.7"
     implementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation ("androidx.room:room-runtime:2.6.1")
+    annotationProcessor ("androidx.room:room-compiler:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation ("androidx.room:room-ktx:2.6.1")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+    implementation ("androidx.cardview:cardview:1.0.0")
+    implementation("androidx.compose.runtime:runtime-livedata:1.5.1")
+
+    implementation("androidx.compose.material3:material3:1.1.1")
+    implementation("androidx.compose.material3:material3-window-size-class:1.1.1")
+
+
+
+
 }
